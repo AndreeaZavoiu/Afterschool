@@ -2,7 +2,7 @@ package entity;
 
 import java.util.Arrays;
 
-public class Serbare extends entity.Activity {
+public class Serbare extends Activity {
     private Student[] students;
     private String location;
     private entity.Schedule schedule;
