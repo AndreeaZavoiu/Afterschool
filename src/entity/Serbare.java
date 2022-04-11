@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class Serbare extends Activity {
     private Student[] students;
     private String location;
-    private entity.Schedule schedule;
+    private Schedule schedule;
     private String tematica; // iarna/vara/8 martie/paste etc
 
-    public Serbare(Student[] students, String location, entity.Schedule schedule, String tematica) {
+    public Serbare(Student[] students, String location, Schedule schedule, String tematica) {
         this.students = students;
         this.location = location;
         this.schedule = schedule;
@@ -17,8 +17,16 @@ public class Serbare extends Activity {
 
     @Override
     public String toString() {
-        return "\n   Va invitam la serbarea cu tematica '" + tematica + "', de la locatia '" + location +
-                "', program: " + schedule + ", la care vor participa elevii:" + Arrays.toString(students);
+        String str = "\n   Va invitam la serbarea cu tematica '" + tematica + "', de la locatia '" + location +
+                "', program: " + schedule + ", la care vor participa elevii: ";
+        for (Student s: students)
+            str += s.getName() + ", ";
+        return str;
+    }
+
+    @Override
+    public int funLevel(){
+        return students.length * 10;
     }
 
 }

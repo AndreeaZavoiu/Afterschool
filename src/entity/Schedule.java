@@ -9,7 +9,6 @@ public class Schedule {
     private String weekDay; // ziua saptamanii (luni, marti...)
     private int month = 0; // pentru serbari / verificari de semestru , nu e neaparata nevoie de acest atribut, decat in unele cazuri
 
-
     public Schedule(String interval, String weekDay) {
         this.interval = interval;
         this.weekDay = weekDay;

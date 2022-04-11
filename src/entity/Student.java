@@ -8,9 +8,8 @@ public class Student implements Cloneable {
     private String name;
     private int grade;
     private String entryDate;
-    private boolean feesPaid; // int sau bool ?
-
-    private List<entity.Schedule> orar;
+    private double feesPaid;
+    private List<Schedule> orar;
 
     public Student(String CNP, String name, int grade, String entryDate) {
         this.CNP = CNP;
@@ -23,13 +22,15 @@ public class Student implements Cloneable {
     public String getName() { return name;}
     public int getGrade() { return grade;}
     public String getEntryDate() { return entryDate;}
+    public double getFeesPaid() { return feesPaid;}
+    public List<Schedule> getOrar() { return orar;}
 
     public void setCNP(String CNP) { this.CNP = CNP;}
     public void setName(String name) { this.name = name;}
     public void setGrade(int grade) { this.grade = grade;}
     public void setEntryDate(String entryDate) { this.entryDate = entryDate;}
-    public void setFeesPaid(boolean feesPaid) { this.feesPaid = feesPaid;}
-    public void setOrar(List<entity.Schedule> orar) { this.orar = orar;}
+    public void setFeesPaid(double feesPaid) { this.feesPaid = feesPaid;}
+    public void setOrar(List<Schedule> orar) { this.orar = orar;}
 
     @Override
     public String toString() {

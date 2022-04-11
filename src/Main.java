@@ -1,7 +1,7 @@
 
 import comparator.GradeComparator;
 import entity.*;
-import service.Afterschool;
+import service.AfterschoolService;
 
 import java.util.*;
 
@@ -30,19 +30,21 @@ public class Main {
         students[3] = s4;
 
 
-        Courses c1 = new Courses("engleza", "avansat");
-        Courses c2 = new Courses("germana", "incepator");
-        Courses c3 = new Courses("dansuri populare", "incepator");
-        List<Courses> l1 = new ArrayList<>();
-        List<Courses> l2 = new ArrayList<>();
-        l1.add(c1);
-        l1.add(c2);
-        l2.add(c3);
+        Course curs1 = new Course("engleza", "avansat");
+        Course curs2 = new Course("germana", "incepator");
+        Course curs3 = new Course("dansuri populare", "incepator");
+        List<Course> l1 = new ArrayList<>();
+        List<Course> l2 = new ArrayList<>();
+        List<Course> cursuri = new ArrayList<>();
+        l1.add(curs1);
+        l1.add(curs2);
+        l2.add(curs3);
+        cursuri.add(curs1); cursuri.add(curs2); cursuri.add(curs3);
 
         Teacher t1 = new Teacher("Alina","profesor", 3400, l1);
         Teacher t2 = new Teacher("Radu Boriga","profesor", 3400, l2);
         Employee t3 = new Employee("Nutica","bucatar", 2000);
-        ArrayList<Employee> employees = new ArrayList<Employee>();
+        ArrayList<Employee> employees = new ArrayList<>();
         employees.add(t1);
         employees.add(t2);
         employees.add(t3);
@@ -56,6 +58,7 @@ public class Main {
         Schedule schedule6 = new Schedule("13-14", "Marti");
         Schedule schedule7 = new Schedule("15-16", "Marti");
         Schedule scheduleSerbarePrimavara = new Schedule("11-13", "Sambata");
+        Schedule scheduleExcursie1 = new Schedule("9-19", "Duminica");
 
         List<Schedule> orar1 = new ArrayList<>();
         orar1.add(schedule1);
@@ -64,13 +67,16 @@ public class Main {
         List<Schedule> orar2 = new ArrayList<>();
         orar2.add(schedule2);
 
+        s1.setOrar(orar1);
+        s2.setOrar(orar2);
+
         t1.setOrar(orar1);
         t2.setOrar(orar2);
 
-        c1.setSchedule(orar1);
-        c2.setSchedule(orar2);
+        curs1.setSchedule(orar1);
+        curs2.setSchedule(orar2);
 
-        Afterschool afterschool = new Afterschool(students, employees);
+        AfterschoolService afterschool = new AfterschoolService(students, employees, cursuri);
         System.out.println(afterschool);
 
         Serbare serbarePrimavara = new Serbare(students,"Casa de cultura", scheduleSerbarePrimavara, "primavara");
@@ -80,6 +86,44 @@ public class Main {
         Student[] studentsCopy = students.clone();
         GradeComparator gradeComparator = new GradeComparator();
         Arrays.sort(studentsCopy, gradeComparator);
-        System.out.println("\n\n   Studentii sortati in ordinea crescatoare a clasei:" + Arrays.toString(studentsCopy));
+        System.out.println("\n\n   Elevii sortati in ordinea crescatoare a clasei:" + Arrays.toString(studentsCopy));
+
+        Excursie excursie1 = new Excursie(students, "Delta Dunarii", scheduleExcursie1, employees);
+        System.out.println(excursie1);
+
+
+        // IMPLEMENTARE INTEROGARI
+        Student studentNou = new Student("516092471", "Gheorghe David", 3, "15.04.2022");
+        afterschool.addStudent(studentNou);
+
+        Course cursNou =  new Course("engleza", "incepator");
+        afterschool.addCourse(cursNou);
+
+        List<Course> listaNouaCursuri = new ArrayList<>();
+        listaNouaCursuri.add(curs1);
+        listaNouaCursuri.add(cursNou);
+        Teacher profNou = new Teacher("Gherasim Luminita", "profesor", 3000, listaNouaCursuri);
+        afterschool.addTeacher(profNou);
+
+        afterschool.changeTeacher(t1, profNou);
+
+        afterschool.changeInterval(schedule7, "14-15");
+        afterschool.addToSchedule(orar2, schedule6);
+
+        s3.setOrar(orar2);
+        List<Schedule> orar3 = new ArrayList<>();
+        orar3.add(schedule3); orar3.add(schedule4); orar3.add(schedule5); orar3.add(schedule6);
+        s4.setOrar(orar3);
+        List<Schedule> orar4 = new ArrayList<>();
+        orar4.add(schedule7);
+        studentNou.setOrar(orar4);
+        afterschool.getOrar(schedule1);
+
+        afterschool.payMonthlyFee(studentNou, 1000);
+        afterschool.upgradeYear();
+
+        afterschool.deleteStudent(studentNou);
+        afterschool.deleteCourse(cursNou);
+        afterschool.deleteEmployee(t3);
     }
 }
