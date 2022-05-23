@@ -1,4 +1,4 @@
-package entity;
+package com.company.entity;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class Classroom {
 
     private List<Student> students; // fiecare clasa are alocata o lista de elevi care isi desfasoara activitatile in ea
     private Schedule schedule; // intr-un anumit interval de timp
-    // adica de la ora la ora, in fiecare sala se pot schimba elevii prezenti
+                                // adica de la ora la ora, in fiecare sala se pot schimba elevii prezenti
 
 
     public Classroom(int id, String utilization, float capacity) {

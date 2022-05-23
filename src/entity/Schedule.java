@@ -1,4 +1,4 @@
-package entity;
+package com.company.entity;
 
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +8,7 @@ public class Schedule {
     private int day = 0; // 1,2,3...31 , nu e neaparata nevoie de acest atribut, decat in unele cazuri
     private String weekDay; // ziua saptamanii (luni, marti...)
     private int month = 0; // pentru serbari / verificari de semestru , nu e neaparata nevoie de acest atribut, decat in unele cazuri
+
 
     public Schedule(String interval, String weekDay) {
         this.interval = interval;

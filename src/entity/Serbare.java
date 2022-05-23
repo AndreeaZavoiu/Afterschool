@@ -1,4 +1,4 @@
-package entity;
+package com.company.entity;
 
 import java.util.Arrays;
 
@@ -17,16 +17,11 @@ public class Serbare extends Activity {
 
     @Override
     public String toString() {
-        String str = "\n   Va invitam la serbarea cu tematica '" + tematica + "', de la locatia '" + location +
-                "', program: " + schedule + ", la care vor participa elevii: ";
-        for (Student s: students)
-            str += s.getName() + ", ";
-        return str;
+        return "\n   Va invitam la serbarea cu tematica '" + tematica + "', de la locatia '" + location +
+                "', program: " + schedule + ", la care vor participa elevii:" + Arrays.toString(students);
     }
 
-    @Override
     public int funLevel(){
         return students.length * 10;
     }
-
 }
