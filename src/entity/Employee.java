@@ -1,5 +1,6 @@
-package entity;
-import interefete.Salary;
+package com.company.entity;
+
+import com.company.interefete.Salary;
 
 public class Employee implements Salary {
 

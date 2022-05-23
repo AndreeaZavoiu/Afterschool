@@ -1,14 +1,15 @@
-package entity;
+package com.company.entity;
 import java.util.List;
 import java.util.Objects;
 
-public class Student implements Cloneable {
+public class Student {
 
     private String CNP;
     private String name;
     private int grade;
     private String entryDate;
-    private double feesPaid;
+    private double feesPaid; // int sau bool ?
+
     private List<Schedule> orar;
 
     public Student(String CNP, String name, int grade, String entryDate) {
@@ -18,13 +19,17 @@ public class Student implements Cloneable {
         this.entryDate = entryDate;
     }
 
+    public Student(){
+        feesPaid = 0;
+        orar = null;
+    }
+
     public String getCNP() { return CNP;}
     public String getName() { return name;}
     public int getGrade() { return grade;}
     public String getEntryDate() { return entryDate;}
-    public double getFeesPaid() { return feesPaid;}
+    public double getFeesPaid() { return feesPaid; }
     public List<Schedule> getOrar() { return orar;}
-
     public void setCNP(String CNP) { this.CNP = CNP;}
     public void setName(String name) { this.name = name;}
     public void setGrade(int grade) { this.grade = grade;}
@@ -53,4 +58,6 @@ public class Student implements Cloneable {
     public int hashCode() {
         return Objects.hash(CNP, name, grade, entryDate, feesPaid, orar);
     }
+
+
 }

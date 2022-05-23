@@ -1,10 +1,15 @@
-package entity;
+package com.company.entity;
+
 import java.util.List;
 
 public class Teacher extends Employee {
 
     private List<Course> courses; // cursuri pe care le preda
     private List<Schedule> orar;
+
+    public Teacher(String name, String departament, int salary) {
+        super(name, departament, salary);
+    }
 
     public Teacher(String name, String departament, int salary, List<Course> courses) {
         super(name, departament, salary);
