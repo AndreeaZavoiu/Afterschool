@@ -1,5 +1,9 @@
 package com.company.service;
 import com.company.entity.*;
+import com.company.repository.CourseRepository;
+import com.company.repository.ScheduleRepository;
+import com.company.repository.StudentRepository;
+import com.company.repository.TeacherRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +16,17 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
     private List<Teacher> teachers = new ArrayList<>();
     private List<Schedule> schedules = new ArrayList<>();
 
-    public AfterschoolService() {}
+    private static StudentRepository studentRepository;
+    private static TeacherRepository teacherRepository;
+    private static CourseRepository courseRepository;
+    private static ScheduleRepository scheduleRepository;
+
+    public AfterschoolService() {
+        studentRepository = new StudentRepository();
+        teacherRepository = new TeacherRepository();
+        courseRepository = new CourseRepository();
+        scheduleRepository = new ScheduleRepository();
+    }
 
     public AfterschoolService(List<Student> students, List<Employee> employees, List<Course> courses) {
         this.students = students;
@@ -35,18 +49,21 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
     @Override
     public void addTeacher (Teacher newTeacher){
         teachers.add(newTeacher);
+        teacherRepository.addTeacher(newTeacher.getName(), newTeacher.getDepartament(), newTeacher.getSalary());
         audit.write("Add Teacher");
     }
 
     @Override
     public void addStudent (Student newStudent) {
         students.add(newStudent);
+        studentRepository.addStudent(newStudent.getCNP(), newStudent.getName(), newStudent.getGrade());
         audit.write("Add Student");
     }
 
     @Override
     public void addCourse (Course newCourse) {
         courses.add(newCourse);
+        courseRepository.addCourse(newCourse.getName(), newCourse.getNivel());
         audit.write("Add Course");
     }
 
@@ -55,18 +72,23 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
         oldTeacher.setName(newTeacher.getName());
         oldTeacher.setDepartament(newTeacher.getDepartament());
         oldTeacher.setSalary(newTeacher.getSalary());
+        teacherRepository.updateTeacherName(oldTeacher.getName(), newTeacher.getName());
+        teacherRepository.updateTeacherDepartment(oldTeacher.getName(), newTeacher.getDepartament());
+        teacherRepository.updateTeacherSalary(oldTeacher.getName(), newTeacher.getSalary());
         audit.write("Change Teacher");
     }
 
     @Override
-    public void changeInterval (Schedule oldSch,  String newInterval) { // doar intervalul orar
+    public void changeInterval (Schedule oldSch, String newInterval) { // doar intervalul orar
         oldSch.setInterval(newInterval);
+        scheduleRepository.updateScheduleInterval(oldSch.getWeekDay(), oldSch.getInterval(), newInterval);
         audit.write("Change Interval");
     }
 
     @Override
     public void addToSchedule (Schedule newSchedule){
         schedules.add(newSchedule);
+        scheduleRepository.addSchedule(newSchedule.getInterval(), newSchedule.getWeekDay());
         audit.write("Add Schedule");
     }
 
@@ -90,6 +112,7 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
         System.out.println("\nYear upgraded.");
         for (Student s : students){
             s.setGrade(s.getGrade() + 1);
+            studentRepository.updateStudentGrade(s.getCNP(), s.getGrade()+1);
         }
         audit.write("Upgrade Year");
     }
@@ -99,6 +122,7 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
         System.out.println(student.toString() + " deleted from afterschool.");
         // if (student.getGrade() > 4)
         students.remove(student);
+        studentRepository.deleteStudent(student.getCNP());
         audit.write("Delete Student");
     }
 
@@ -106,6 +130,8 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
     public void deleteEmployee (Employee employee) {
         System.out.println("\nEmployee " + employee.getDepartament() + " " + employee.getName() + " deleted from afterschool.");
         employees.remove(employee);
+        if (employee.getDepartament().equals("profesor"))
+            teacherRepository.deleteTeacher(employee.getName());
         audit.write("Delete Employee");
     }
 
@@ -113,6 +139,7 @@ public class AfterschoolService implements IAfterschoolService{    // clasa serv
     public void deleteCourse (Course course) {
         System.out.println("\nCourse " + course.getName() + ", " + course.getNivel() + " deleted.");
         courses.remove(course);
+        courseRepository.deleteCourse(course.getName(), course.getNivel());
         audit.write("Delete Course");
     }
 
